@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laith Drebaty Personal Website</title>
+    <style>
+        #tooltip {
+            position: fixed;
+            left: 0;
+            top: 0;
+            min-width: 100px;
+            text-align: center;
+            padding: 5px 12px;
+            font-family: monospace;
+            background: #a0c020;
+            display: none;
+            opacity: 0;
+            border: 1px solid black;
+            box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.5);
+            transition: opacity 0.25s linear;
+            border-radius: 3px;
+        }
+    </style>
+    <link rel="icon" href="icons/icon.png" type="image/icon type">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+</head>
+<body>
+    <video id="video" loop autoplay crossOrigin="anonymous" playsinline style="display:none">
+        <!-- <source src="textures/sintel.ogv" type='video/ogg; codecs="theora, vorbis"'> -->
+        <source src="textures/textureVideo.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
+    </video>
+
+    <div id="WebGL-output"> </div>
+    <div id="tooltip"></div>
+
+    <script type="x-shader/x-vertex" id="vertexshader">
+
+        varying vec2 vUv;
+
+        void main() {
+
+            vUv = uv;
+
+            gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+
+        }
+
+    </script>
+    <script type="x-shader/x-fragment" id="fragmentshader">
+
+        uniform sampler2D baseTexture;
+        uniform sampler2D bloomTexture;
+
+        varying vec2 vUv;
+
+        void main() {
+
+            gl_FragColor = ( texture2D( baseTexture, vUv ) + vec4( 1.0 ) * texture2D( bloomTexture, vUv ) );
+
+        }
+    </script>
+
+    <!-- Import maps polyfill -->
+    <!-- Remove this when import maps will be widely supported -->
+    <!-- <script async src="https://unpkg.com/es-module-shims@1.3.6/dist/es-module-shims.js"></script> -->
+    <script async src="es-module-shims.js"></script>
+
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "./three/build/three.module.js"
+            }
+        }
+    </script>
+
+    <script type="module">
+
+        import * as THREE from 'three';
+        // import { OrbitControls } from './three/examples/jsm/controls/OrbitControl.js';
+        import { GLTFLoader } from './three/examples/jsm/loaders/GLTFLoader.js';
+        import { EffectComposer } from './three/examples/jsm/postprocessing/EffectComposer.js';
+        import { RenderPass } from './three/examples/jsm/postprocessing/RenderPass.js';
+        import { ShaderPass } from './three/examples/jsm/postprocessing/ShaderPass.js';
+        import { UnrealBloomPass } from './three/examples/jsm/postprocessing/UnrealBloomPass.js';
+
+        // gltf loader is used in all functions
+        const loader = new GLTFLoader();
+
+        var clock = new THREE.Clock();
+        var scene = new THREE.Scene();
+
+        var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 130);
+
+        var renderer = new THREE.WebGLRenderer();
+        renderer.setClearColor(new THREE.Color(0x000000));
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        camera.position.x = 0;
+        camera.position.y = 3;
+        camera.position.z = 2.2;
+        camera.rotation.x = -0.5;
+        scene.add(camera);
+        // var orbit = new OrbitControls(camera, renderer.domElement);
+        // orbit.enablePan = false;
+
+        // add the output of the renderer to the html element
+        document.getElementById("WebGL-output").appendChild(renderer.domElement);
+
+        var ambiColor = "#1c1c1c";
+        var ambientLight = new THREE.AmbientLight(ambiColor);
+        scene.add(ambientLight);
+
+        var pointLight = new THREE.PointLight("#ccffcc");
+        pointLight.position.x = 0;
+        pointLight.position.y = 4;
+        pointLight.position.z = 0;
+        pointLight.distance = 100;
+        scene.add(pointLight);
+
+        var laptop, intersectable = [], videoPlayed = false;
+        loader.load('models/table.glb', function(result){
+            const table = result.scene;
+            const video = document.getElementById( 'video' );
+            const texture = new THREE.VideoTexture( video );
+            laptop = result.scenes[0].children[1];
+            laptop.children[1].material.map = texture;
+            scene.add(table);
+            intersectable.push(laptop);
+            laptop.userData.tooltipText = "my projects";
+            laptop.userData.path = "projects.html";
+        });
+
+        loader.load('models/books.glb', function(result){
+            const books = result.scene;
+            books.children[0].position.y = 1.820;
+            books.children[0].position.x = -0.6;
+            books.children[0].position.z = -0.3;
+            books.children[0].scale.set(2, 2, 2);
+            scene.add(books);
+            intersectable.push(books);
+            result.scenes[0].children[0].children[0].userData.tooltipText = "books that i recommend";
+            result.scenes[0].children[0].children[0].userData.path = "books.html";
+        });
+
+        loader.load('models/papers.glb', function(result){
+            const papers = result.scene;
+            papers.scale.set(0.08, 0.08, 0.08);
+            papers.position.set(-1.22, 1.93, 0);
+            papers.rotation.y = -1.40;
+            scene.add(papers);
+            intersectable.push(papers);
+            result.scenes[0].children[0].children[0].userData.tooltipText = "my CV";;
+            result.scenes[0].children[0].children[0].userData.path = "cv.html";
+        });
+
+        let spotLight, lightHelper;
+
+        spotLight = new THREE.SpotLight( 0xffffff, 2 );
+        spotLight.position.set( 0, 5, 0 );
+        spotLight.angle = Math.PI / 12;
+        spotLight.penumbra = 0.1;
+        spotLight.decay = 2;
+        spotLight.distance = 10;
+
+        spotLight.castShadow = true;
+        spotLight.shadow.mapSize.width = 512;
+        spotLight.shadow.mapSize.height = 512;
+        spotLight.shadow.camera.near = 5;
+        spotLight.shadow.camera.far = 200;
+        spotLight.shadow.focus = 1;
+        scene.add( spotLight );
+
+        const raycaster = new THREE.Raycaster();
+        raycaster.far = 35;
+        const pointer = new THREE.Vector2(0, 0);
+        let goTo = "";        
+
+        // bloom filter
+        renderer.toneMapping = THREE.ReinhardToneMapping;
+        renderer.toneMappingExposure = 1;
+
+        const renderScene = new RenderPass( scene, camera );
+        
+        const bloomPass = new UnrealBloomPass( new THREE.Vector2( window.innerWidth, window.innerHeight ), 1.5, 0.4, 0.85 );
+        bloomPass.threshold = 0.1;
+        bloomPass.strength = 0.6;
+        bloomPass.radius = 0.08;
+        
+        const bloomComposer = new EffectComposer( renderer );
+        bloomComposer.renderToScreen = false;
+        bloomComposer.addPass( renderScene );
+        bloomComposer.addPass( bloomPass );
+        bloomComposer.setSize(window.innerWidth, window.innerHeight);
+
+        const finalPass = new ShaderPass(
+				new THREE.ShaderMaterial( {
+					uniforms: {
+						baseTexture: { value: null },
+						bloomTexture: { value: bloomComposer.renderTarget2.texture }
+					},
+					vertexShader: document.getElementById( 'vertexshader' ).textContent,
+					fragmentShader: document.getElementById( 'fragmentshader' ).textContent,
+					defines: {}
+				} ), 'baseTexture'
+			);
+        finalPass.needsSwap = true;
+
+        const finalComposer = new EffectComposer( renderer );
+        finalComposer.addPass( renderScene );
+        finalComposer.addPass( finalPass );
+        finalComposer.setSize(window.innerWidth, window.innerHeight);
+
+        const darkMaterial = new THREE.MeshBasicMaterial( { color: 'black' } );
+        const materials = {};
+        let intersectedObject = null; 
+
+        render();
+        function render() 
+        {
+            if(!videoPlayed) {
+                videoPlayed = true;
+                document.getElementById( 'video' ).play().catch( () => {
+                    videoPlayed = false;
+                });
+            }
+
+            var delta = clock.getDelta();
+            // orbit.update(delta);
+
+            // render using requestAnimationFrame
+            requestAnimationFrame(render);
+
+            finalComposer.render();
+        }
+
+        window.addEventListener( 'pointermove', onPointerMove );
+        
+        // tooltip section
+        function onPointerMove( event ) 
+        {
+            pointer.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+            pointer.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+
+            raycaster.setFromCamera( pointer, camera );
+            const intersects = raycaster.intersectObjects( intersectable );
+    
+            spotLight.visible = false;
+            
+            intersectedObject = null;
+            latestMouseProjection = undefined;
+
+            goTo = "";
+
+            if(intersects.length > 0) {
+                spotLight.visible = true;
+                spotLight.target = intersects[0].object;
+
+                intersectedObject = intersects[ 0 ].object.parent;
+                latestMouseProjection = intersects[0].point;
+
+                goTo = intersectedObject.userData.path;
+            }
+
+            handleManipulationUpdate();
+
+            // we render the bloom once so that the render photo is there
+            // then we render the final render which takes the bloom render
+            // as the shader of its vertecies
+            if(intersectedObject){
+                scene.traverse( (obj)=>{
+                    if ( obj.isMesh && obj !== intersectedObject && obj.parent != intersectedObject) {
+                        materials[ obj.uuid ] = obj.material;
+                        obj.material = darkMaterial;
+                    }
+                });
+                bloomComposer.render();
+                scene.traverse( (obj)=>{
+                    if ( materials[ obj.uuid ] ) {
+                        obj.material = materials[ obj.uuid ];
+                        delete materials[ obj.uuid ];
+                    }
+                });
+            } else {
+                scene.traverse( (obj)=>{
+                    materials[ obj.uuid ] = obj.material;
+                    obj.material = darkMaterial;
+                });
+                bloomComposer.render();
+                scene.traverse( (obj)=>{
+                    obj.material = materials[ obj.uuid ];
+                    delete materials[ obj.uuid ];
+                });
+            }
+        }
+
+        var latestMouseProjection; // this is the latest projection of the mouse on object (i.e. intersection with ray)
+        var tooltipDisplayTimeout;
+
+        // This will move tooltip to the current mouse position and show it by timer.
+        function showTooltip() {
+            var divElement = document.getElementById("tooltip");
+
+            if (divElement && latestMouseProjection) {
+                divElement.style.display = "block";
+                divElement.style.opacity = 0.0;
+
+                var canvasHalfWidth = renderer.domElement.offsetWidth / 2;
+                var canvasHalfHeight = renderer.domElement.offsetHeight / 2;
+
+                var tooltipPosition = latestMouseProjection.clone().project(camera);
+                tooltipPosition.x = (tooltipPosition.x * canvasHalfWidth) + canvasHalfWidth + renderer.domElement.offsetLeft;
+                tooltipPosition.y = -(tooltipPosition.y * canvasHalfHeight) + canvasHalfHeight + renderer.domElement.offsetTop;
+
+                var tootipWidth = divElement.offsetWidth;
+                var tootipHeight = divElement.offsetHeight;
+
+                divElement.style.left = `${tooltipPosition.x - tootipWidth/2}px`;
+                divElement.style.top = `${tooltipPosition.y - tootipHeight - 5}px`;
+
+                // var position = new THREE.Vector3();
+                // var quaternion = new THREE.Quaternion();
+                // var scale = new THREE.Vector3();
+                // hoveredObj.matrix.decompose(position, quaternion, scale);
+                divElement.innerText = intersectedObject.userData.tooltipText;
+
+                setTimeout(function() {
+                    divElement.style.opacity = 1.0;
+                }, 25);
+            }
+        }
+
+        function hideTooltip() {
+            var divElement = document.getElementById("tooltip");
+            if (divElement) {
+                divElement.style.display = "none";
+            }
+        }
+            
+        function handleManipulationUpdate() {
+            if (tooltipDisplayTimeout || !latestMouseProjection) {
+                clearTimeout(tooltipDisplayTimeout);
+                tooltipDisplayTimeout = undefined;
+                hideTooltip();
+            }
+
+            if (!tooltipDisplayTimeout && latestMouseProjection) {
+                tooltipDisplayTimeout = setTimeout(function() {
+                    tooltipDisplayTimeout = undefined;
+                    showTooltip();
+                }, 330);
+            }
+        }
+
+        window.addEventListener( 'click', Go );
+        window.addEventListener( 'touch', Go );
+
+        function Go() {
+            if(goTo != "") {
+                window.location.replace(goTo);
+            }
+        }
+    </script>
+</body>
+</html>

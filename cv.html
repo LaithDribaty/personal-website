@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laith Drebaty CV</title>
+    <link rel="icon" href="icons/icon.png" type="image/icon type">
+
+    <style>
+        body{
+            position: relative;
+            margin: 0;
+        }
+        /* #profile-photo{
+            background-image: url('./images/profile.jpg');
+            background-size: cover;
+            background-position: center top;
+            height: 100%;
+            border-radius: 70%;
+            border: solid 2px #d1d1d1;
+        } */
+        #WebGL-output{
+            height: 100%;
+            border-radius: 70%;
+            border: solid 2px #d1d1d1;
+        }
+        #name{
+            font-size: 60px;
+            margin-bottom: 25px;
+        }
+        #job{
+            font-size: 40px;
+            color: #616161;
+        }
+        #job-desc{
+            margin-top: 25px;
+            font-size: 35px;
+            margin-bottom: 25px;
+        }
+        #contact-info{
+            background-color: #e9e9e9;
+            height: 300px;
+        }
+
+        a{
+            text-decoration: underline;
+            color: black;
+        }
+        #info-table{
+            font-size: 27px;
+        }
+        .info-table-cell{
+            width: 50%;
+            padding: 20px 35px;
+        }
+        /* end of contact section */
+
+
+        .headers {
+            color: #3465A4;
+            margin-bottom: 5px;
+            font-size: x-large;
+        }
+
+        .info-section{
+            padding: 5%;
+        }
+        
+        .info-section-table{
+            width: 100%;
+            
+        }
+        
+        .info-section-table td{
+            width: 50%;
+            vertical-align: top;
+        }
+
+        .skills-container{
+            display: flex;
+            flex-wrap: wrap
+        }
+        .item {
+            font-size: x-large;
+            color: white;
+            background-color: #5983B0;
+            border: solid 1px white;
+            border-radius: 6px;
+            padding: 12px;
+            margin-right: 5px;
+            font-weight: bold;
+        }
+        /* template for all windows */
+        .windowed-text {
+        	text-shadow: 1px 1px 10px black;
+        }
+        .window:hover, .window-line:hover, .window-line:hover + .window, .windowed-text:hover ~ .window, .windowed-text:hover + .window-line, .windowed-text:hover ~ .window1, .windowed-text:hover ~ .window2{
+            display: block;
+        }
+
+        .window, .window1, .window2{
+            display: none;
+            position: absolute;
+            width: 330px;
+            height: 200px;
+            top: 0;
+            left: 0;
+            border: solid 2px black;
+            text-align: center;
+        }
+        .window-line, .window-line1, .window-line2{
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: linear-gradient(60deg, 
+                rgba(255, 255, 255, 0) calc(50% - 1px), 
+                rgb(0, 0, 0) calc(50%), 
+                rgba(255, 255, 255, 0) calc(50% + 1px)
+            );
+        }
+        /* template end */
+
+        .fontlarge{
+            font-size: x-large;
+        }
+        .fontmedium{
+            font-size: large;
+        }
+        .date-container{
+            font-size: large;
+            color: grey;
+        }
+        .dot{
+            border: solid 1px rgb(98, 98, 245);
+            border-radius: 20px;
+            width: 12px;
+            height: 12px;
+            margin: 0;
+            display: inline-block;
+        }
+        .filled-dot{
+            background-color: rgb(130, 130, 211);
+        }
+        .empty-dot{
+            background-color: rgb(255, 255, 255);
+        }
+    </style>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <script src="three/build/three.js"></script>
+    <script src="three/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="three/examples/js/controls/OrbitControls.js"></script>
+    <!-- consider removing this -->
+</head>
+<body>
+    <div style="margin: 8px;">
+        <table width="100%" height="300px" cellpadding="20">
+            <tr>
+                <td width="25%">
+                    <!-- <div id="profile-photo"> </div> -->
+                    <div id="WebGL-output"> </div>
+                </td>
+                <td width="75%">
+                    <div id="name"> Laith Drebaty </div>
+                    <div id="job"> web developer </div>
+                    <div id="job-desc"> Intermediate web developer, and problem solving coach </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    
+    <br><br>
+
+    <div id="contact-info"> 
+        <table width="100%" id="info-table">
+            <tr>
+                <td class="info-table-cell">
+                    <i class="material-icons">&#xe158;</i>
+                    <a href="mailto:laith.drebaty@gmail.com">laith.drebaty@gmail.com</a>
+                </td>
+                <td class="info-table-cell">
+                    <i class="material-icons">&#xe324;</i>
+                    +963937341249
+                </td>
+            </tr>
+            <tr>
+                <td class="info-table-cell" >
+                    <i class="fa">&#xf124;</i>
+                    <span id="locationEl" class="windowed-text">
+                        Lattakia-7th project, lattakia , syria
+                    </span>
+                    <!-- location (address) window -->
+                    <div class="window-line" id="location-window-line"></div>
+                    <div class="window" id="location-window">
+                        <div class="mapouter">
+                            <div class="gmap_canvas">
+                                <iframe width="330" height="200" id="gmap_canvas" src="https://maps.google.com/maps?q=%D8%A7%D9%84%D9%85%D8%B4%D8%B1%D9%88%D8%B9%20%D8%A7%D9%84%D8%B3%D8%A7%D8%A8%D8%B9&t=&z=17&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                    <!--  -->
+                </td>
+
+                <td class="info-table-cell">
+                    <img src="icons/codeforcesIcon.png" width="25px">
+                    <a href="https://codeforces.com/profile/Laith_Drebaty" id="codeforcesEl" class="windowed-text">
+                        codeforces.com/profile/Laith_Drebaty
+                    </a>
+                    <!-- codeforces window -->
+                    <div class="window-line" id="codeforces-window-line"> </div>
+                    <div class="window" id="codeforces-window">
+                        <img src="images/codeforces.png" width="330" height="200">
+                    </div>
+                    <!--  -->
+                </td>
+            </tr>
+            <tr>
+                <td class="info-table-cell">
+                    <i class="fa">&#xf082;</i>
+                    <a href="https://facebook.com/LaithDrebaty">
+                        facebook.com/LaithDrebaty
+                    </a>
+                </td>
+                <td class="info-table-cell">
+                    <i class="fa">&#xf092;</i>
+                    <a href="https://github.com/LaithDribaty">
+                        github.com/LaithDribaty
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td class="info-table-cell">
+                    <i class="fa">&#xf08c;</i>
+                    <a href="https://www.linkedin.com/in/laith-drebaty-7a8790193/">
+                        www.linkedin.com/LaithDribaty
+                    </a>
+                </td>
+                <td class="info-table-cell"></td>
+            </tr>
+        </table>
+    </div>
+
+
+    <div class="info-section">
+        <table class="info-section-table">
+            <tr>
+                <td colspan="2">
+                    <h1 class="headers"> SKILLS </h1>
+                    <div class="skills-container">
+                        <!-- it is being modefied by javascript -->
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h1 class="headers"> EDUCATION </h1>
+                    <div class="fontlarge">
+                        <div>
+                            <b>Informatics Engineering</b>
+                        </div>
+                        <span class="windowed-text" id="TishreenEl" style="text-decoration: underline;">
+                            Tishreen University
+                        </span>
+                        <div class="window-line" id="Tishreen-window-line"> </div>
+                        <div class="window" id="Tishreen-window">
+                            <img src="images/Tishreen_University_logo.jpg" width="330" height="200">
+                        </div>
+                        <div class="date-container">
+                            09/2017-Present
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <h1 class="headers"> WORK EXPERIENCE </h1>
+                    <div class="fontlarge">
+                        <b>
+                            full stack developer in <a href="https://shamra.sy" id="shamraEl" class="windowed-text"> Shamra  </a>
+                            <!-- shamra window -->
+                            <div class="window-line" id="shamra-window-line"> </div>
+                            <div class="window" id="shamra-window">
+                                <img src="images/shamra.jpg" width="330" height="200">
+                            </div>
+                            <!--  -->
+                        </b>
+                        <div class="date-container">
+                            02/2021-10/2021
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h1 class="headers"> TEACHING EXPERIENCE </h1>
+                    
+                    <div class="fontlarge">
+                        <b>
+                            preparation for competitive programming Course
+                        </b>
+                        <div>
+                            Tishreen University
+                        </div>
+                        <div class="date-container">
+                            02/2019-Present
+                        </div>
+                    </div>
+                </td>
+
+                <td rowspan="2">
+                    <h1 class="headers"> PERSONAL PROJECTS </h1>
+                    <div id="projects-container"  class="fontlarge">
+                        
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h1 class="headers"> ACHIEVEMENTS AND PARTICIPATING </h1>
+                    <div class="fontmedium">
+                        <div>
+                            - honorable mention in <b> Africa and Arab </b> CPC 2021-2022
+                        </div>
+                        <br>
+                        <div>
+                            <span class="windowed-text" id="SCPC2021El">
+                                - 6 th place in <b> Syrian </b> CPC 2021-2022 (bronze medal)
+                            </span>
+                            <!-- SCPC2021 window -->
+                            <div class="window-line" id="SCPC2021-window-line"> </div>
+                            <div class="window" id="SCPC2021-window">
+                                <img src="images/SCPC2021.jpg" width="330" height="200">
+                            </div>
+                            <!--  -->
+                        </div>
+                        <br>
+                        <div>
+                            <span class="windowed-text" id="TCPC2021El">
+                                - 3 rd place in <b> Tishreen </b> CPC 2021-2022 (bronze medal)
+                            </span>
+                            <!-- TCPC2021 window -->
+                            <div class="window-line" id="TCPC2021-window-line"> </div>
+                            <div class="window" id="TCPC2021-window">
+                                <img src="images/TCPC2021.jpg" width="330" height="200">
+                            </div>
+                            <!--  -->
+                        </div>
+                        <br>
+                        <div>
+                            <span class="windowed-text" id="SCPC2019El">
+                                - 18 th place in <b> Syrian </b> CPC 2019-2020
+                            </span>
+                            <!-- SCPC2019 window -->
+                            <div class="window-line" id="SCPC2019-window-line"> </div>
+                            <div class="window" id="SCPC2019-window">
+                                <img src="images/SCPC2019.jpg" width="330" height="200">
+                            </div>
+                            <!--  -->
+                        </div>
+                        <br>
+                        <div>
+                            my full ICPC participating: <a href="https://icpc.global/ICPCID/E0MH2DSSOL61">icpc.global/ICPCID/E0MH2DSSOL61</a>
+
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" class="fontlarge">
+                    <h1 class="headers"> LANGUAGES </h1>
+                    <div style="width: 24%; display: inline-block; margin: 0;">
+                        Arabic
+                    </div>
+                    <div style="width: 24%; display: inline-block; margin: 0;">
+                        <div class="dot filled-dot"></div>
+                        <div class="dot filled-dot"></div>
+                        <div class="dot filled-dot"></div>
+                        <div class="dot filled-dot"></div>
+                        <div class="dot filled-dot"></div>
+                    </div>
+                    <div style="width: 24%; display: inline-block; margin: 0;">
+                        English
+                    </div>
+                    <div style="width: 24%; display: inline-block; margin: 0;">
+                        <div class="dot filled-dot"></div>
+                        <div class="dot filled-dot"></div>
+                        <div class="dot filled-dot"></div>
+                        <div class="dot filled-dot"></div>
+                        <div class="dot empty-dot"></div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br>
+    <br><br><br><br><br><br><br>
+
+    <script>
+        // to use this function you should make an element with id like "something"El and has the class "windowed-text"
+        // then as a sibling to it you should put a couple elments the first has the class
+        // window-line and the second sibling has the class window and in it you put what you want to show
+        function addWindow(name="", multi=0) {
+            
+            const el = name + "El";
+            const element = document.getElementById(el);
+
+            var bodyRect = document.body.getBoundingClientRect(),
+                elemRect = element.getBoundingClientRect(),
+                offsetY   = elemRect.top - bodyRect.top,
+                offsetX   = elemRect.left - bodyRect.left;
+
+            var posY = offsetY + elemRect.height + 18,
+                posX = offsetX + elemRect.width/2;
+
+            const elWindow = name + "-window";
+            let window = document.getElementById(elWindow);
+            window.style.top = posY + "px";
+            window.style.left =  posX + "px";
+
+            const elWindowLine = name + "-window-line";
+            let windowLine = document.getElementById(elWindowLine);
+            windowLine.style.top = (posY-22) + "px";
+            windowLine.style.left = (posX-9) + "px";
+            windowLine.style.width = "120px";
+            windowLine.style.height = "26px";
+
+            // you may change this
+            if(multi) {
+                const elWindow1 = name + "-window1";
+                let window1 = document.getElementById(elWindow1);
+                window1.style.top = posY + "px";
+                window1.style.left =  (posX-350) + "px";
+
+                if(multi > 1){
+                    const elWindow2 = name + "-window2";
+                    let window2 = document.getElementById(elWindow2);
+                    window2.style.top = (posY+220) + "px";
+                    window2.style.left =  posX + "px";
+                }
+            }
+        }
+
+        addWindow("location");
+        addWindow("codeforces");
+
+
+        // adding skills here
+        let skills = ['C++', 'Algorithms', 'Problem solving', 'JAVA', 'javafx', 'JQuery', 'Vue.js', 'SQL', 'Docker', 'Microsoft office', 'Symfony', 'Laravel', 'SEO', '3D rendering', 'Opengl', 'Three.js', 'Blender'];
+        let skillsEl = document.getElementsByClassName('skills-container');
+        skills.forEach(element => {
+            skillsEl[0].innerHTML += `<div class="item"> ${element} </div>`;
+        });
+        
+
+        let projects = [
+            {
+                id: "house-project",
+                title: "- house traversing website",
+                techs: ["symfony" ,"javascript"],
+                url: "5museum5.000webhostapp.com/",
+                window: [
+                    "<img src=\"images/housesnapshot.gif\" width=\"330px\" height=\"200px\" />"
+                ],
+            },
+            {
+                id: "online-judge",
+                title: "- online judge embedded in 3D web game",
+                techs: ["symfony" ,"webgl"],
+                url: null,
+                window: [
+                    "<img src=\"images/robotsnapshot.gif\" width=\"330px\" height=\"200px\" />"
+                ],
+            },
+            {
+                id: "analyzer",
+                title: "- grades analyzer website",
+                techs: ["laravel" ,"javascript"],
+                url: null,
+                window: [
+                    "<img src=\"images/analyzersnapshot1.jpg\" width=\"330px\" height=\"200px\" />",
+                    "<img src=\"images/analyzersnapshot2.jpg\" width=\"330px\" height=\"200px\" />",
+                    "<img src=\"images/analyzersnapshot3.jpg\" width=\"330px\" height=\"200px\" />"
+                ],
+            },
+            {
+                id: "ship-game",
+                title: "- simple interactive game",
+                techs: ["vue.js" ,"socket.io"],
+                url: "secure-everglades-56087.herokuapp.com/",
+                window: null,
+            },
+            {
+                id: "Tishreen-University-VR",
+                title: "- IT faculty of tishreen VR website",
+                techs: ["elastic search" ,"socket.io", "symfony", "cppRestSDK", "amp HTML", "three.js", "blender"],
+                url: null,
+                window: [
+                    "<img src=\"images/ITFOTUVRW.gif\" width=\"330px\" height=\"200px\" />"
+                ],
+            }
+        ];
+        let projectsEl = document.getElementById('projects-container');
+        let innerHtml = "";
+        projects.forEach(element => {
+            innerHtml += `<div>`;
+            innerHtml += `
+            <b id="${element.id}El" class="windowed-text">${element.title}</b>`
+            if(element.window){
+                innerHtml += `
+                <div class="window-line" id="${element.id}-window-line"> </div>
+                <div class="window" id="${element.id}-window">
+                    ${element.window[0]}
+                </div>`;
+                for (let index = 1; index < element.window.length; index++) {
+                    innerHtml += `
+                    <div class="window-line${index}" id="${element.id}-window-line${index}"> </div>
+                    <div class="window${index}" id="${element.id}-window${index}">
+                        ${element.window[index]}
+                    </div>`;
+                }
+            }
+
+            innerHtml += `<div> using: `;
+            element.techs.forEach(techElement => {
+                innerHtml += `${techElement}, `;
+            });
+            innerHtml += `</div>`;
+        
+            if(element.url){
+                innerHtml += `
+                <div>
+                    url:
+                    <a href="https://${element.url}">
+                        ${element.url}
+                    </a>
+                </div>
+                `;
+            }
+            innerHtml += "<br>";
+            innerHtml += `</div>`;
+        });
+        projectsEl.innerHTML += innerHtml;
+
+        addWindow("Tishreen");
+        addWindow("house-project");
+        addWindow("online-judge");
+        addWindow("analyzer", 2);
+        addWindow("shamra");
+        addWindow("SCPC2019");
+        addWindow("TCPC2021");
+        addWindow("SCPC2021");
+        addWindow("Tishreen-University-VR");
+    </script>
+
+    <script>
+        // gltf loader is used in all functions
+        const loader = new THREE.GLTFLoader();
+
+        var clock = new THREE.Clock();
+        var scene = new THREE.Scene();
+
+        var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 130);
+
+        var renderer = new THREE.WebGLRenderer();
+        renderer.setClearColor(new THREE.Color(0xffffff));
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        camera.position.x = -30;
+        camera.position.y = 10;
+        camera.position.z = 30;
+        camera.lookAt(scene.position);
+
+        // add the output of the renderer to the html element
+        renderer.domElement.style.width = "100%";
+        renderer.domElement.style.height = "100%";
+        renderer.domElement.style.borderRadius = "70%";
+        document.getElementById("WebGL-output").appendChild(renderer.domElement);
+
+        var orbit = new THREE.OrbitControls(camera, renderer.domElement);
+        orbit.enablePan = false;
+        orbit.enableZoom = false;
+
+        var ambiColor = "#1c1c1c";
+        var ambientLight = new THREE.AmbientLight(ambiColor);
+        scene.add(ambientLight);
+
+        var directionalLight = new THREE.DirectionalLight(0xf3f3f3);
+        directionalLight.position.set(20, 40, 20);
+
+        directionalLight.shadow.camera.near = 5;
+        directionalLight.shadow.camera.far = 20;
+        directionalLight.shadow.camera.left = -20;
+        directionalLight.shadow.camera.right = 20;
+        directionalLight.shadow.camera.top = 20;
+        directionalLight.shadow.camera.bottom = -20;
+        directionalLight.intensity = 1;
+        scene.add(directionalLight);
+
+        loader.load('models/me.glb', function(result){
+            const me = result.scenes[0].children[0];
+            me.scale.x *= 10;
+            me.scale.y *= 10;
+            me.scale.z *= 10;
+            directionalLight.target = me;
+            scene.add(me);
+        });
+
+        // const testGeometry = new THREE.BoxGeometry(10, 10, 10);
+        // const testMaterial = new THREE.MeshLambertMaterial({color: '#f5f5f5'});
+        // const test = new THREE.Mesh(testGeometry, testMaterial);
+        // scene.add(test);
+
+
+
+        render();
+        function render() {
+            var delta = clock.getDelta();
+            orbit.update();
+
+            // render using requestAnimationFrame
+            requestAnimationFrame(render);
+            renderer.render(scene, camera);
+        }
+    </script>
+</body>
+</html>
