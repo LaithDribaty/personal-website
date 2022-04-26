@@ -7,8 +7,234 @@
     <title>Books</title>
     <link rel="icon" href="icons/icon.png" type="image/icon type">
 
+    <style>
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #444;
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+        }
+
+        p {
+            margin: 0 0 13px 0;
+        }
+
+        a {
+            color: #fff;
+        }
+
+        .center { text-align: center; }
+
+        .container {
+            width: 95%;
+            max-width: 1220px;
+            margin: 0 auto;
+        }
+
+        .episode {
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+            position: relative;
+        }
+
+        .episode__number {
+            font-size: 10vw;
+            font-weight: 600;
+            padding: 10px 10px;
+            position: sticky;
+            top: 0;
+            text-align: center;
+            height: 220px;
+            transition: all 0.2s ease-in;
+        }
+
+        .episode__content {
+            border-top: 2px solid #fff;
+            display: grid;
+            grid-template-columns: 1fr 4fr;
+            grid-gap: 10px;
+            padding: 15px 0;
+        }
+
+        .episode__content .title {
+            font-weight: 600
+        }
+
+        .episode__content .story {
+            line-height: 26px;
+        }
+
+        @media (max-width: 600px) {
+            .episode__content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .episode__content .story {
+                font-size: 15px;
+            }
+        }
+    </style>
 </head>
 <body>
-    not implemented yet
-</body>
+    <div class="container">
+      <h1 class="center">Books that I recommend in Web learning</h1>
+      
+      <article class="episode">
+        <div class="episode__number">
+            <img src="images/books/HTMLCSSBOOK.jpg" alt="" width="140" height="200">
+        </div>
+        <div class="episode__content">
+          <div class="title">HTML & CSS</div>
+          <div class="story">
+            <p>A good start point in web learning.</p>
+            <p>Jon Ducket explain HTML and CSS in some manner that he covers all essential concepts. and also give you the ability to expand yourself.</p>
+            <p>I would recommend it as a start because it explain some basic operations that happens in the internet which is very important to understand how the web is constructed.</p>
+            <p>Simple language make the book easy for any reader in IT or in Enlgish.</p>
+            <p>Also the effect of shapes and diagrams and simple drawing in the book makes it attract.</p>
+        </div>
+        </div>
+      </article>
+
+      <article class="episode">
+        <div class="episode__number">
+            <img src="images/books/JAVASCRIPTBOOK.jpg" alt="" width="140" height="200">
+        </div>
+        <div class="episode__content">
+          <div class="title">JAVASCRIPT & JQUERY</div>
+          <div class="story">
+            <p>Just like the previouse book Jon Ducket continues his journy in making great books.</p>
+            <p>And why javascript is very important to be studied, because that it is the only language that a browser can compile and run, any other language such coffee or typescript are being compiled and build into javascript before deploying them</p>
+            <p>also JQUERY is a very important javascript library to simplify the code, like their motto "code less do more" and make use of AJAX request effectivly.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="episode">
+        <div class="episode__number">
+            <img src="images/books/ES6Book.jpg" alt="" width="140" height="200">
+        </div>
+        <div class="episode__content">
+          <div class="title">Advanced JavaScript</div>
+          <div class="story">
+              <p>as all other programming languages improves over time to cover increasing demands and cases, javascript released some new versions like ES6</p>
+              <p>in ES6 many new features were added to javascript, so this book with its examples and homeworks is a very good entry point to learn those new features</p>
+              <p>also as a plus the book contain a chapter about new technologies that uses javascript to accomplish many useful things</p>
+            </div>
+        </div>
+      </article>
+
+      <article class="episode">
+        <div class="episode__number">
+            <img src="images/books/SEOBook.jpg" alt="" width="140" height="200">
+        </div>
+        <div class="episode__content">
+          <div class="title">SEO For Dummies</div>
+          <div class="story">
+          </div>
+        </div>
+      </article>
+
+      <article class="episode">
+        <div class="episode__number">
+            <img src="images/books/restAPIBook.jpg" alt="" width="140" height="200">
+        </div>
+        <div class="episode__content">
+          <div class="title">REST API</div>
+          <div class="story">
+          </div>
+        </div>
+      </article>
+
+      <h1 class="center">Books that I recommend in 3D on the web</h1>
+
+      <article class="episode">
+        <div class="episode__number">
+            <img src="images/books/BlenderBook.jpg" alt="" width="140" height="200">
+        </div>
+        <div class="episode__content">
+          <div class="title">Learning Blender</div>
+          <div class="story">
+          </div>
+        </div>
+      </article>
+
+      <article class="episode">
+        <div class="episode__number">
+            <img src="images/books/threeBook.jpg" alt="" width="140" height="200">
+        </div>
+        <div class="episode__content">
+          <div class="title">Learning Three.js: The JavaScript 3D Library for WebGL</div>
+          <div class="story">
+          </div>
+        </div>
+      </article>
+
+      <h1 class="center">Books that I recommend in general</h1>
+
+      <article class="episode">
+        <div class="episode__number">
+            <img src="images/books/AlgorithmBook.jpg" alt="" width="140" height="200">
+        </div>
+        <div class="episode__content">
+          <div class="title">Advanced Algorithms And Data Structures</div>
+          <div class="story">
+          </div>
+        </div>
+      </article>
+      
+      <article class="episode">
+        <div class="episode__number">
+            <img src="images/books/designpatternBook.jpg" alt="" width="140" height="200">
+        </div>
+        <div class="episode__content">
+          <div class="title">Dive Into DESIGN PATTERNS</div>
+          <div class="story">
+          </div>
+        </div>
+      </article>
+      
+      <article class="episode">
+        <div class="episode__number">
+            <img src="images/books/cleancodeBook.jpg" alt="" width="140" height="200">
+        </div>
+        <div class="episode__content">
+          <div class="title">Clean Code</div>
+          <div class="story">
+          </div>
+        </div>
+      </article>
+
+      <article class="episode">
+        <div class="episode__number">
+            <img src="images/books/dockerBook.jpg" alt="" width="140" height="200">
+        </div>
+        <div class="episode__content">
+          <div class="title">Docker in Action</div>
+          <div class="story">
+          </div>
+        </div>
+      </article>
+
+      <article class="episode">
+        <div class="episode__number">
+            <img src="images/books/UMLBook.jpg" alt="" width="140" height="200">
+        </div>
+        <div class="episode__content">
+          <div class="title">teach yourself UML in 24 hours</div>
+          <div class="story">
+          </div>
+        </div>
+      </article>
+
+      </div>
+      <h3 class="center"><a href="https://www.instagram.com/aristidebenoist/" target="_blank" rel="noopener noreferer">Inspired by Aristide Benoist</a></h3>
+    </body>
 </html>

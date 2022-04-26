@@ -221,13 +221,6 @@
         render();
         function render() 
         {
-            if(!videoPlayed) {
-                videoPlayed = true;
-                document.getElementById( 'video' ).play().catch( () => {
-                    videoPlayed = false;
-                });
-            }
-
             var delta = clock.getDelta();
             // orbit.update(delta);
 
@@ -353,6 +346,13 @@
                     showTooltip();
                 }, 330);
             }
+
+            if(!videoPlayed) {
+                videoPlayed = true;
+                document.getElementById( 'video' ).play().catch( () => {
+                    videoPlayed = false;
+                });
+            }
         }
 
         // function floatAnimation(obj) {
@@ -364,7 +364,7 @@
 
         function Go() {
             if(goTo != "") {
-                window.location.replace(goTo);
+                window.location.href = goTo;
             }
         }
     </script>

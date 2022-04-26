@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D projects</title>
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700|Oswald:400,300,700);
+        /* Import */
+        /* Variables */
+        /* Base */
+        body {
+            background: #252827;
+            font-size: 16px;
+        }
+        strong {
+            font-weight: 600;
+        }
+        h1 {
+            font-family: 'Oswald', sans-serif;
+            letter-spacing: 1.5px;
+            color: #ffffff;
+            font-weight: 100;
+            font-size: 2.4em;
+        }
+        #content {
+            margin-top: 50px;
+            text-align: center;
+        }
+        /* Timeline */
+        .timeline {
+            border-left: 4px solid #4298c3;
+            border-bottom-right-radius: 4px;
+            border-top-right-radius: 4px;
+            background: rgba(255, 255, 255, 0.03);
+            color: rgba(255, 255, 255, 0.8);
+            font-family: 'Source Sans Pro', sans-serif;
+            margin: 50px auto;
+            letter-spacing: 0.5px;
+            position: relative;
+            line-height: 1.4em;
+            font-size: 1.03em;
+            padding: 50px;
+            list-style: none;
+            text-align: left;
+            font-weight: 100;
+            max-width: 60%;
+        }
+        .timeline h1,
+        .timeline h2,
+        .timeline h3 {
+            font-family: 'Oswald', sans-serif;
+            letter-spacing: 1.5px;
+            font-weight: 100;
+            font-size: 1.4em;
+        }
+        .timeline .event {
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+            padding-bottom: 25px;
+            margin-bottom: 50px;
+            position: relative;
+        }
+        .timeline .event:last-of-type {
+            padding-bottom: 0;
+            margin-bottom: 0;
+            border: none;
+        }
+        .timeline .event:before,
+        .timeline .event:after {
+            position: absolute;
+            display: block;
+            top: 0;
+        }
+        .timeline .event:before {
+            left: -217.5px;
+            color: rgba(255, 255, 255, 0.4);
+            content: attr(data-date);
+            text-align: right;
+            font-weight: 100;
+            font-size: 0.9em;
+            min-width: 120px;
+        }
+        .timeline .event:after {
+            box-shadow: 0 0 0 4px #4298c3;
+            left: -57.85px;
+            background: #313534;
+            border-radius: 50%;
+            height: 11px;
+            width: 11px;
+            content: "";
+            top: 5px;
+        }
+
+        /* my image css */
+        .image {
+            padding: 2px 10px;
+        }
+        .caption{
+            text-align: center;
+            font-size: large;
+        }
+        .float-left{
+            float: left;
+            clear: both;
+        }
+        .float-right {
+            float: right;
+            clear: both;
+        }
+    </style>
+
+    <link rel="icon" href="icons/icon.png" type="image/icon type">
+</head>
+<body>
+    <div id="content">
+        <h1>3D projects</h1>
+    
+        <ul class="timeline">
+            <li class="event" data-date="second year">
+                <h3>first glance</h3>
+                <div class="image float-right">
+                    <img src="images/projects/MCF.jpg" alt="" width="250" height="150" >
+                    <div class="caption">
+                        <caption>MCF game poster</caption>
+                    </div>
+                </div>
+                
+                <div class="image float-right">
+                    <img src="images/housesnapshot.gif" alt="" width="250" height="150">
+                    <div class="caption">
+                        <caption>house project</caption>
+                    </div>
+                </div>
+
+                <p>
+                    In my second year in college I was playing a game called "return to raverhearst", this game inspired me to take the idea of moving
+                    between places like you hover over a door and then press to enter the room so I took photos of my country house and then made a website
+                    that act exactly like the game, we move around in the house by pressing doors or some areas, the project was my first thoughts of VR and
+                    benefits of VR and the great experience that VR can give.        
+                </p>
+
+                <p>
+                    also i was introduced to the power of canvas element in html which i will use later in my future projects
+                    working with it here was very handy, i made a small script helped me extract points in photos rather than hard code it,
+                    the better solution was using some program to extract the border points of some objects in the photo but this was out of my scope back then            
+                </p>
+            </li>
+
+
+            <li class="event" data-date="fourth year">
+                <h3>Going Forward</h3>
+                
+                <div class="image float-right">
+                    <img src="images/opengl.gif" alt="" width="250" height="150">
+                    <div class="caption">
+                        <caption>OpenGL joke</caption>
+                    </div>
+                </div>
+                <p>
+                    later in my fourth year in college I took a course named "draw with computers" which was a very important course to introduce 3D rendering and
+                    new technologies that implements the basic concepts of 3D rendering.
+                </p>
+                <p>
+                    for those who don't know what openGL is, openGL is a c++ 3D library that helps alot in making 3D scenes and games.. it is dedicated to desktop not for the web
+                    but we may use the shaders of openGL in some application of Web 3D.
+                </p>
+            </li>
+
+            <li class="event" data-date="semester project">
+            <h3>Moving to the Web</h3>
+                <div class="image float-right">
+                    <img src="images/robotsnapshot.gif" alt="" width="250" height="150">
+                    <div class="caption">
+                        <caption>semester project</caption>
+                    </div>
+                </div>
+                <p>
+                    In the second half of the same year we have a semester project, so we decided to try to make an online judge (like codeforces, hackerrank, lightoj, SPOJ..) because we were ACMers (ICPC contesters) so we wanted to know how all of this work 
+                    but to make work more fantasy or more fun, we decided to make it a 3D game that you walk along some rooms and then solve problems and then if it is right the doors open.
+                </p>
+                <p>
+                    to make this experience more reachable we decided to make it web based not desktop so we needed some technology other than OpenGL, after search we found WebGL and used it to make our work.
+                </p>
+            </li>
+
+            <li class="event" data-date="fifth year">
+                <div class="image float-right">
+                    <img src="images/ITFOTUVRW.gif" alt="" width="250" height="150">
+                    <div class="caption">
+                        <caption>graduate project</caption>
+                    </div>
+                </div>
+
+                <h3>Getting Better</h3>
+                <p>
+                    after that in fifth year we decided to make a VR for our faculty in Tishreen University so we needed to model all faculty stuff and walls and rooms which was a very hard and tiddy job to be done
+                    and if this VR should help fresh students walk in faculty and not get lost, so we needed the modeled faculty to be as similar as possible to the real one, here was the need to some new modern technologies that will make it easier
+                    so we used blender to make some complex models, and then we used three.js to make upload this models in web page.
+                </p>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>
