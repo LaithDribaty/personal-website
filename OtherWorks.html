@@ -1,2 +1,225 @@
-not implemented yet 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Other</title>
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700|Oswald:400,300,700);
+        /* Import */
+        /* Variables */
+        /* Base */
+        body {
+            background: #252827;
+            font-size: 16px;
+        }
+        strong {
+            font-weight: 600;
+        }
+        h1 {
+            font-family: 'Oswald', sans-serif;
+            letter-spacing: 1.5px;
+            color: #ffffff;
+            font-weight: 100;
+            font-size: 2.4em;
+        }
+        #content {
+            margin-top: 50px;
+            text-align: center;
+        }
+        /* Timeline */
+        .timeline {
+            border-left: 4px solid #4298c3;
+            border-bottom-right-radius: 4px;
+            border-top-right-radius: 4px;
+            background: rgba(255, 255, 255, 0.03);
+            color: rgba(255, 255, 255, 0.8);
+            font-family: 'Source Sans Pro', sans-serif;
+            margin: 50px auto;
+            letter-spacing: 0.5px;
+            position: relative;
+            line-height: 1.4em;
+            font-size: 1.03em;
+            padding: 50px;
+            list-style: none;
+            text-align: left;
+            font-weight: 100;
+            max-width: 60%;
+        }
+        .timeline h1,
+        .timeline h2,
+        .timeline h3 {
+            font-family: 'Oswald', sans-serif;
+            letter-spacing: 1.5px;
+            font-weight: 100;
+            font-size: 1.4em;
+        }
+        .timeline .event {
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+            padding-bottom: 25px;
+            margin-bottom: 50px;
+            position: relative;
+        }
+        .timeline .event:last-of-type {
+            padding-bottom: 0;
+            margin-bottom: 0;
+            border: none;
+        }
+        .timeline .event:before,
+        .timeline .event:after {
+            position: absolute;
+            display: block;
+            top: 0;
+        }
+        .timeline .event:before {
+            left: -217.5px;
+            color: rgba(255, 255, 255, 0.4);
+            content: attr(data-date);
+            text-align: right;
+            font-weight: 100;
+            font-size: 0.9em;
+            min-width: 120px;
+        }
+        .timeline .event:after {
+            box-shadow: 0 0 0 4px #4298c3;
+            left: -57.85px;
+            background: #313534;
+            border-radius: 50%;
+            height: 11px;
+            width: 11px;
+            content: "";
+            top: 5px;
+        }
 
+        /* my image css */
+        .image {
+            padding: 2px 10px;
+        }
+        .caption{
+            text-align: center;
+            font-size: large;
+        }
+        .clear{
+            clear: both;
+        }
+        .float-right {
+            float: right;
+        }
+    </style>
+
+    <link rel="icon" href="icons/icon.png" type="image/icon type">
+</head>
+<body>
+    <div id="content">
+        <h1>Other interests</h1>
+    
+        <ul class="timeline">
+            <li class="event" data-date="Blender">
+                <h3>Blender</h3>
+                <div class="image float-right">
+                    <img src="images/blender arts/fake.jpg" alt="" width="250" height="150" >
+                    <div class="caption">
+                        <caption>fake blender image</caption>
+                    </div>
+                </div>
+                <div class="image float-right">
+                    <img src="images/blender arts/real.jpg" alt="" width="250" height="150" >
+                    <div class="caption">
+                        <caption>real image</caption>
+                    </div>
+                </div>
+                <p>
+                    My domain of interests is converting real places into 3D digital models and websites.
+                </p>
+                <p>
+                    and I always think about that trade off between perforance and reality level of my models so that I don't say "I did a very beutifaul project but it doesn't work!".
+                    beside images show how i copied my place of work into model using blender.
+                </p>
+
+                <p style="clear: both;"></p>
+            </li>
+
+            <li class="event" data-date="reality websites">
+                <h3>Copy the real world</h3>
+                <div class="image float-right clear">
+                    <img src="images/projects/PW.jpg" alt="" width="250" height="150">
+                    <div class="caption">
+                        <caption>Personal website</caption>
+                    </div>
+                </div>
+                <div class="image float-right clear">
+                    <img src="images/projects/ITFake.jpg" alt="" width="250" height="150">
+                    <div class="caption">
+                        <caption>fake IT Faculty</caption>
+                    </div>
+                </div>
+                <div class="image float-right">
+                    <img src="images/projects/ITReal.jpg" alt="" width="250" height="150">
+                    <div class="caption">
+                        <caption>real IT Faculty</caption>
+                    </div>
+                </div>
+                <p>
+                    the second domain of concern is moving those models into internet and web so that everyone can use and see and interact.
+                </p>
+                <p>
+                    so using WebGL and three.js and other javascript libraries that help make things easier I managed to make some websites.
+                </p>
+
+                <p style="clear: both;"></p>
+            </li>
+
+            <li class="event" data-date="">
+                <h3>Backend Dev</h3>
+                <p>
+                    As a backend developer I tried all the time to cover those increasing demands and requests for more good user experience, so i used those technologies and platforms:
+                </p>
+                <ul>
+                    <li>
+                        elastic search
+                    </li>
+                    <li>
+                        Google CSE
+                    </li>
+                    <li>
+                        cpprestsdk
+                    </li>
+                    <li>
+                        MySQL
+                    </li>
+                    <li>
+                        Apache web server
+                    </li>
+                    <li>
+                        socket.io
+                    </li>
+                </ul>
+                <p style="clear: both;"></p>
+            </li>
+
+            <li class="event" data-date="">
+                <h3>Frontend Dev</h3>
+                <p>
+                    As a frontend developer i used those technologies and platforms:
+                </p>
+                <ul>
+                    <li>
+                        amp html from google
+                    </li>
+                    <li>
+                        JQUERY
+                    </li>
+                    <li>
+                        Bootstrap
+                    </li>
+                    <li>
+                        Coolors.co to choose the right colors
+                    </li>
+                </ul>
+                <p style="clear: both;"></p>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>
