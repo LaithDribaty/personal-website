@@ -146,6 +146,36 @@
         .empty-dot{
             background-color: rgb(255, 255, 255);
         }
+
+        .sticky-sticker {
+            position: fixed;
+            top: 60px;
+            right: 0px;
+            width: 150px;
+            height: 50px;
+            padding: 25px 10px;
+            background-color: #5983B0;
+            color: white;
+            text-align: center;
+        }
+
+        .close-sticker {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .close-sticker div {
+            position: absolute;
+            top: -25px;
+            left: -10px;
+            width: 20px;
+            height: 20px;
+            font-size: 25px;
+            text-shadow: 1px 1px 10px #b6634e;
+            color: #B02E0C; 
+            cursor: pointer;
+        }
     </style>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -157,6 +187,16 @@
     <!-- consider removing this -->
 </head>
 <body>
+
+    <div id="sticky-sticker" class="sticky-sticker">
+        <div class="close-sticker">
+            hover over shaded text to see extra info
+            <div id="close-sticker">
+                x
+            </div>
+        </div>
+    </div>
+
     <div style="margin: 8px;">
         <table width="100%" height="300px" cellpadding="20">
             <tr>
@@ -625,6 +665,12 @@
             requestAnimationFrame(render);
             renderer.render(scene, camera);
         }
+    </script>
+
+    <script>
+        document.getElementById('close-sticker').addEventListener('click', (e)=>{
+            document.getElementById('sticky-sticker').style.display = "none";
+        });
     </script>
 </body>
 </html>
